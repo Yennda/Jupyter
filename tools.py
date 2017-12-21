@@ -8,6 +8,8 @@ from copy import copy
 from skimage import data, io, filters, util
 import IPython
 
+UMPX=87.3/1216
+
 #useful functions
 def derivation(V,i):
     #naivelly simple numerical derivation
@@ -44,7 +46,7 @@ def widths(sw):
     w.append(sw[-1]-start)
     return w, d
 
-def wires_analysis(area_color):
+def wires_analysis(area_color, display=True):
     #profile (average of values in x direction)
     area=rgb2gray(area_color)
     y=[]
@@ -74,38 +76,39 @@ def wires_analysis(area_color):
     s_wires=split(wires)[0]
     w_wires=widths(s_wires)[0]
     d_wires=widths(s_wires)[1]
+    if display:
+        print(w_wires)
+        print(d_wires)
 
-    print(w_wires)
-    print(d_wires)
+        print('average width: {:.3f} um'.format(np.average(w_wires)*UMPX))
+        print('average distance: {:.3f} um'.format(np.average(d_wires)*UMPX))
+        print('std width: {:.3f} um'.format(np.std(w_wires)*UMPX))
+        print('std distance: {:.3f} um'.format(np.std(d_wires)*UMPX))
 
-    print('average width: {:.3f} um'.format(np.average(w_wires)/14))
-    print('average distance: {:.3f} um'.format(np.average(d_wires)/14))
-    print('std width: {:.3f} um'.format(np.std(w_wires)/14))
-    print('std distance: {:.3f} um'.format(np.std(d_wires)/14))
+        print('together: {:.3f} um'.format(np.average(w_wires)/14+np.average(d_wires)*UMPX))
 
-    print('together: {:.3f} um'.format(np.average(w_wires)/14+np.average(d_wires)/14))
-    
-    #shows the recognized wires in red
-    area_wires=copy(area_color)
-    for i in s_wires:
-        area_wires[i,:]=(255,0,0)
+        #shows the recognized wires in red
+        area_wires=copy(area_color)
+        for i in s_wires:
+            area_wires[i,:]=(255,0,0)
 
-    plt.imshow(area_wires)
-    plt.savefig('wires_red.png', dpi=200, bbox_inches='tight')
-    
-    #graph
-    fig = plt.figure()
-    ax = fig.add_axes([0.2, 0.2, 0.7, 0.7])
+        plt.imshow(area_wires)
+        plt.savefig('wires_red.png', dpi=200, bbox_inches='tight')
 
-    ax.grid(linestyle='--')   
-    ax.plot(np.arange(len(y)), y, linewidth=2)
-    ax.set_title('Intensity profile in the image')
-    ax.set_xlabel('x direction [px]')
-    ax.set_ylabel('intensity a.u.')
+        #graph
+        fig = plt.figure()
+        ax = fig.add_axes([0.2, 0.2, 0.7, 0.7])
+
+        ax.grid(linestyle='--')   
+        ax.plot(np.arange(len(y)), y, linewidth=2)
+        ax.set_title('Intensity profile in the image')
+        ax.set_xlabel('x direction [px]')
+        ax.set_ylabel('intensity a.u.')
 
     # ax.plot(np.arange(len(dy)), dy, linewidth=2)
     # ax.plot(np.arange(len(wires)), wires, linewidth=2)
     # ax.scatter(split(gaps)[0], split(gaps)[1], linewidth=2)
+    return w_wires, d_wires
  
 '''
 def wires_analysis(area_color):
