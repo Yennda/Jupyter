@@ -93,7 +93,7 @@ def wires_analysis(area_color, display=True):
             area_wires[i,:]=(255,0,0)
 
         plt.imshow(area_wires)
-        plt.savefig('wires_red.png', dpi=200, bbox_inches='tight')
+        plt.savefig('tmp/wires_red.png', dpi=200, bbox_inches='tight')
 
         #graph
         fig = plt.figure()
