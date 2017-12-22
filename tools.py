@@ -85,7 +85,7 @@ def wires_analysis(area_color, display=True):
         print('std width: {:.3f} um'.format(np.std(w_wires)*UMPX))
         print('std distance: {:.3f} um'.format(np.std(d_wires)*UMPX))
 
-        print('together: {:.3f} um'.format(np.average(w_wires)/14+np.average(d_wires)*UMPX))
+        print('together: {:.3f} um'.format(np.average(w_wires)*UMPX+np.average(d_wires)*UMPX))
 
         #shows the recognized wires in red
         area_wires=copy(area_color)
