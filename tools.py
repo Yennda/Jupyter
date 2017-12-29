@@ -77,8 +77,8 @@ def wires_analysis(area_color, display=True):
     w_wires=widths(s_wires)[0]
     d_wires=widths(s_wires)[1]
     if display:
-        print(w_wires)
-        print(d_wires)
+        print('widths of wires [px]: {}'.format(w_wires))
+        print('widths of gaps [px]: {}'.format(d_wires))
 
         print('average width: {:.3f} um'.format(np.average(w_wires)*UMPX))
         print('average distance: {:.3f} um'.format(np.average(d_wires)*UMPX))
