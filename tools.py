@@ -90,7 +90,7 @@ def wires_analysis(area_color, display=True):
         #shows the recognized wires in red
         area_wires=copy(area_color)
         for i in s_wires:
-            area_wires[i,:]=(255,0,0)
+            area_wires[i,:]=(180,0,0)
 
         plt.imshow(area_wires)
         plt.savefig('tmp/wires_red.png', dpi=200, bbox_inches='tight')
